@@ -19,7 +19,7 @@ body{
     height: 180px;
     border: 4px solid black;
     margin: 2rem;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 .red{
     background-color: rgb(255, 93, 93);
@@ -30,9 +30,12 @@ body{
 .yellow{
     background-color: rgb(242, 242, 122);
 }
-.bule{
+.blue{
     background-color: rgb(125, 125, 255);
 }
 .flash{
-    color:#b1e890;
+    background-color:#b6f996;
+}
+.userflash{
+    background-color: aquamarine;
 }
