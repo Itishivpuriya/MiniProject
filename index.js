@@ -1,7 +1,10 @@
-
 let gameset = [];  // Store the generated sequence
 let startset = []; // Store the player's input
-let btns = ["red", "blue", "green", "yellow"]; // Button colors
+let btns = [
+    "btn1", "btn2", "btn3", "btn4", 
+    "btn5", "btn6", "btn7", "btn8", 
+    "btn9", "btn10", "btn11", "btn12"
+]; // Button colors
 let start = false;
 let level = 0;
 let h2 = document.querySelector("h2");
@@ -21,17 +24,13 @@ function btnflash(btn) {
         return;
     }
     btn.classList.add("flash");
-    setTimeout(function () {
-        btn.classList.remove("flash");
-    }, 250);
+    setTimeout(() => btn.classList.remove("flash"), 250);
 }
 
 // Flash effect for user input
 function userFlash(btn) {
     btn.classList.add("userflash");
-    setTimeout(function () {
-        btn.classList.remove("userflash");
-    }, 250);
+    setTimeout(() => btn.classList.remove("userflash"), 250);
 }
 
 // Level up - generate a random color and flash it
@@ -61,19 +60,15 @@ function check() {
     if (startset[idx] === gameset[idx]) {
         console.log("Correct input");
 
-        // If the player's input matches the sequence, check if it's the last color
         if (startset.length === gameset.length) {
-            // Wait 1 second and level up
             setTimeout(levelUp, 1000);
         }
     } else {
-        // Game Over, display message and reset
-        h2.innerHTML = `Game Over! your score <b>${level}<b> <br> Press any key to start again`;
-        document.querySelector("body").style.backgroundColor="red";
-        setTimeout(function(){
-               document.querySelector("body").style.backgroundColor="#b1e890";
-
-        },150)
+        h2.innerHTML = `Game Over! Your score: <b>${level}</b> <br> Press any key to start again.`;
+        document.querySelector("body").style.backgroundColor = "red";
+        setTimeout(() => {
+            document.querySelector("body").style.backgroundColor = "#b1e890";
+        }, 150);
         resetGame();
     }
 }
@@ -83,7 +78,6 @@ function btnPress() {
     let btn = this;
     userFlash(btn);
 
-    // Get the color ID of the button clicked
     let usercolor = btn.getAttribute("id");
     startset.push(usercolor);
     check();
@@ -97,8 +91,9 @@ function resetGame() {
     start = false;
 }
 
-// Attach event listeners to all buttons
-let allBtns = document.querySelectorAll(".btn");
-for (let btn of allBtns) {
-    btn.addEventListener("click", btnPress);
-}
+// Attach event listeners to all buttons using event delegation
+document.getElementById("contenar-div").addEventListener("click", function (event) {
+    if (event.target && event.target.classList.contains("btn")) {
+        btnPress.call(event.target);
+    }
+});
